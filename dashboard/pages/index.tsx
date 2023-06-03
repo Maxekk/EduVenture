@@ -1,8 +1,9 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
+import LoginScreen from "@/components/LoginScreen";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  return <h1 className="text-red-500">Test css</h1>;
+  return <LoginScreen />;
 }
