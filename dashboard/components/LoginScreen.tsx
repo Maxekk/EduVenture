@@ -1,11 +1,42 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import Image from "next/image";
 import logo from "../public/logo.png";
 import InputField from "./InputField";
+import { globalContext } from "@/context/globalContext";
 
 type Props = {};
 
 function LoginScreen({}: Props) {
+    const { setuserData,setisLogged,login,password } = useContext(globalContext) 
+  //fix the bug with capturing info from inputs, it works just on second try
+    async function loginUser() {
+        const credentials = {
+          login: login ,
+          password: password
+        };
+        try {
+          const response = await fetch(`http://localhost:8080/login`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(credentials)
+          });
+          
+          const data = await response.json();
+          setuserData(data)
+          if(data.id != null){
+            setisLogged(true)
+          }
+          else{
+            alert("wrong credentials")
+          }
+        } catch (error) {
+          console.error('Error:', error);
+      }
+  }
+
+
   return (
     <div className="w-[100%] h-screen bg-[var(--lunar)] flex flex-col">
       <div className="w-[100%] h-[20%] flex justify-center items-center">
@@ -18,7 +49,7 @@ function LoginScreen({}: Props) {
             <InputField label="Email" isPassword={false}/>
             <InputField label="Password" isPassword={true}/>
 
-            <button className="bg-transparent w-[250px] h-[70px] mt-24 text-white font-mono text-3xl border-4 border-green-500 transition-[1s] hover:bg-green-500">Login</button>
+            <button className="bg-transparent w-[250px] h-[70px] mt-24 text-white font-mono text-3xl border-4 border-green-500 transition-[1s] hover:bg-green-500" onClick={loginUser}>Login</button>
             </div>
           </div>
         </div>

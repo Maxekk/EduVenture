@@ -1,9 +1,15 @@
 import Image from "next/image";
-import { Inter } from "next/font/google";
+import { Goblin_One, Inter } from "next/font/google";
 import LoginScreen from "@/components/LoginScreen";
+import { globalContext } from "@/context/globalContext";
+import { useContext } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  return <LoginScreen />;
+  const { isLogged } = useContext(globalContext)
+
+  return(
+    isLogged ? <div>Logged in</div> : <LoginScreen />
+  );
 }
