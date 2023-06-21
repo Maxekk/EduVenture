@@ -5,11 +5,17 @@ import { globalContext } from "@/context/globalContext";
 import { useContext } from "react";
 import { redirect } from "next/navigation";
 import Dashboard from "../components/Dashboard";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const { isLogged } = useContext(globalContext);
 
-  return isLogged ? <Dashboard /> : <LoginScreen />;
+  return(
+    <>
+    <Head><title>Eduventure</title></Head>
+    {isLogged ? <Dashboard /> : <LoginScreen />}
+    </>
+  );
 }

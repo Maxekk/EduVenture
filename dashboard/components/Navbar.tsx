@@ -19,6 +19,7 @@ import { TfiAnnouncement } from 'react-icons/tfi';
 import { BsFillPersonFill } from 'react-icons/bs';
 import { RiLogoutBoxRFill } from 'react-icons/ri'
 import { globalContext } from '@/context/globalContext';
+import Home from './Home'
 
 const drawerWidth = 240;
 
@@ -96,7 +97,7 @@ export default function MiniDrawer() {
 
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const { route,setisLogged } = useContext(globalContext);
+  const { route,setisLogged, userData } = useContext(globalContext);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -106,7 +107,7 @@ export default function MiniDrawer() {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', overflow: "hidden" }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
@@ -121,11 +122,12 @@ export default function MiniDrawer() {
             }}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> 
           <Typography variant="h6" noWrap component="div">
             {route}
           </Typography>
-          <Box sx={{ flexGrow: 1 }} /> {/* Added code */}
+          <Box sx={{ flexGrow: 1, gap: "10px" }} /> {/* Added code */}
+          <Typography>{userData.firstname} {userData.lastname}</Typography>
           <IconButton
             color="inherit"
             aria-label="button"
@@ -150,13 +152,13 @@ export default function MiniDrawer() {
         </List>
         <Divider />
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <div className='w-[100%] h-[97vh] mt-0'>
         <DrawerHeader />
-        {route == "Home" && <div>Home</div>}
+        {route == "Home" && <Home />}
         {route == "Annoucements" && <div>Annoucements</div>}
         {route == "Manage Students" && <div>Manage Students</div>}
         {route == "Log Out" && <div>Log Out</div>}
-      </Box>
+      </div>
     </Box>
   );
 }

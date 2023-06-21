@@ -1,6 +1,7 @@
 package com.example.api.user
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import org.apache.catalina.User
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service
@@ -17,13 +18,14 @@ data class LoginResponse(
         val password: String?,
         val is_admin: Int?
 )
+data class UserCount(val totalStudents: Int, val totalTeachers: Int)
 
 @Service
 class userService {
     @Autowired
     private lateinit var db: JdbcTemplate
     private lateinit var userrepository: userRepository
-    fun getUsers(): List<user>{
+    fun getAllUsers(): List<user>{
         return db.query("select * from users") {
                 rec, _ -> user(
                     id = rec.getInt("id"),
@@ -36,7 +38,7 @@ class userService {
                 )}
     }
     fun checkCredentials(@RequestBody userData: credentials ): LoginResponse {
-        val users = getUsers()
+        val users = getAllUsers()
         val matchingUser = users.find { it.login == userData.login && it.password == userData.password }
         if(matchingUser != null){
             return LoginResponse(
@@ -62,5 +64,12 @@ class userService {
                     null
             )
         }
+    }
+
+    fun getUsersCount(): UserCount {
+        val users = getAllUsers()
+        val teachers = users.count { it.is_admin == 1 }
+        val students = users.count {it.is_admin == 0}
+        return UserCount(students,teachers)
     }
 }

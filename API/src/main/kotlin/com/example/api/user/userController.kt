@@ -1,5 +1,6 @@
 package com.example.api.user
 
+import org.apache.catalina.User
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
@@ -13,5 +14,8 @@ class userController {
     fun checkCredentials(@RequestBody userData: credentials): LoginResponse = userservice.checkCredentials(userData)
 
     @GetMapping("/getUsers")
-    fun getUsers(): List<user> = userservice.getUsers()
+    fun getAllUsers(): List<user> = userservice.getAllUsers()
+
+    @GetMapping("/getUsrCount")
+    fun getUsersCount(): UserCount = userservice.getUsersCount()
 }
