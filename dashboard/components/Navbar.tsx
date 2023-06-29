@@ -20,6 +20,7 @@ import { BsFillPersonFill } from 'react-icons/bs';
 import { RiLogoutBoxRFill } from 'react-icons/ri'
 import { globalContext } from '@/context/globalContext';
 import Home from './Home'
+import Annoucements from './Annoucements';
 
 const drawerWidth = 240;
 
@@ -155,7 +156,7 @@ export default function MiniDrawer() {
       <div className='w-[100%] h-[97vh] mt-0'>
         <DrawerHeader />
         {route == "Home" && <Home />}
-        {route == "Annoucements" && <div>Annoucements</div>}
+        {route == "Annoucements" && <Annoucements />}
         {route == "Manage Students" && <div>Manage Students</div>}
         {route == "Log Out" && <div>Log Out</div>}
       </div>
