@@ -2,7 +2,7 @@ import React from 'react'
 
 type Props = {}
 
-function Annoucement({}: Props) {
+function Announcement({}: Props) {
   return (
     <div className='w-[45vw] h-[45vh] bg-white ml-[-5vw] shadow-xl flex flex-col'>
         <div className='w-[45vw] h-[6vh] border-b-2 flex'>
@@ -24,4 +24,4 @@ function Annoucement({}: Props) {
   )
 }
 
-export default Annoucement
+export default Announcement

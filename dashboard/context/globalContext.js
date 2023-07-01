@@ -15,9 +15,10 @@ export const ContextProvider = ({ children }) => {
   const [password,setpassword] = useState("")
   const [isLogged,setisLogged] = useState(false)
   const [route,setRoute] = useState("Home");
+  const [showOverlay, setShowOverlay] = useState(false)
   return (
     <globalContext.Provider
-      value={{ userData, setuserData, isLogged, setisLogged,login,password,setlogin,setpassword,route,setRoute }}
+      value={{ userData, setuserData, isLogged, setisLogged,login,password,setlogin,setpassword,route,setRoute,showOverlay,setShowOverlay }}
     >
       {children}
     </globalContext.Provider>
