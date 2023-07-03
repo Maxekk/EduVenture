@@ -8,17 +8,6 @@ import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
 
-data class LoginResponse(
-        val canLogin: Boolean?,
-        val id: Int?,
-        val firstname: String?,
-        val lastname: String?,
-        val email: String?,
-        val login: String?,
-        val password: String?,
-        val is_admin: Int?
-)
-data class UserCount(val totalStudents: Int, val totalTeachers: Int)
 
 @Service
 class userService {
@@ -27,14 +16,14 @@ class userService {
     private lateinit var userrepository: userRepository
     fun getAllUsers(): List<user>{
         return db.query("select * from users") {
-                rec, _ -> user(
-                    id = rec.getInt("id"),
-                    firstname = rec.getString("firstname"),
-                    lastname = rec.getString("lastname"),
-                    login = rec.getString("login"),
-                    email = rec.getString("email"),
-                    password = rec.getString("password"),
-                    is_admin = rec.getInt("is_admin")
+                res, _ -> user(
+                    id = res.getInt("id"),
+                    firstname = res.getString("firstname"),
+                    lastname = res.getString("lastname"),
+                    login = res.getString("login"),
+                    email = res.getString("email"),
+                    password = res.getString("password"),
+                    is_admin = res.getInt("is_admin")
                 )}
     }
     fun checkCredentials(@RequestBody userData: credentials ): LoginResponse {
@@ -71,5 +60,20 @@ class userService {
         val teachers = users.count { it.is_admin == 1 }
         val students = users.count {it.is_admin == 0}
         return UserCount(students,teachers)
+    }
+
+    fun getAnnouncements(): List<Announcement> {
+        return db.query("select * from announcements") { res, _ -> Announcement(
+            id = res.getInt("id"),
+            title = res.getString("title"),
+            content = res.getString("content"),
+            upload_date = res.getDate("upload_date")
+        )}
+    }
+
+    fun addAnnouncement(announcement: Announcement): String {
+        val insertQuery = "INSERT INTO announcements (title, upload_date, content) VALUES (?, ?, ?)"
+        db.update(insertQuery, announcement.title, announcement.upload_date, announcement.content)
+        return "Announcement added successfully."
     }
 }

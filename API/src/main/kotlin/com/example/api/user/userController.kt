@@ -18,4 +18,10 @@ class userController {
 
     @GetMapping("/getUsrCount")
     fun getUsersCount(): UserCount = userservice.getUsersCount()
+
+    @GetMapping("/getAnnouncements")
+    fun getAnnouncements(): List<Announcement> = userservice.getAnnouncements()
+
+    @PostMapping("/addAnnouncement")
+    fun addAnnouncement(@RequestBody announcement: Announcement): String = userservice.addAnnouncement(announcement)
 }
