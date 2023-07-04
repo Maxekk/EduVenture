@@ -1,12 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Announcement from './Announcement'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { globalContext } from '@/context/globalContext'
 
-type Props = {}
+type Annoucement = {
+    title: String, 
+    upload_date: String,
+    content: String
+}
 
-function Announcements({}: Props) {
-    const { setShowOverlay } = useContext(globalContext)
+function Announcements() {
+    const { setShowOverlay,fetchData,announcements } = useContext(globalContext)
+    
+    useEffect(() => {
+        fetchData()
+    },[])
 
   return (
     <div className='w-[100vw] h-[100vh] flex flex-col'>
@@ -19,11 +27,10 @@ function Announcements({}: Props) {
             </button>
         </div>
         <div className='w-[100vw] h-[90vh] flex gap-10 flex-col items-center overflow-scroll p-5'>
-            <Announcement />
-            <Announcement />
-            <Announcement />
-            <Announcement />
-            <Announcement />
+        {announcements.slice().reverse().map((item: Annoucement) => {
+        return <Announcement title={item.title} upload_date={item.upload_date} content={item.content} />;
+        })}
+
         </div>
     </div>
     )

@@ -16,9 +16,15 @@ export const ContextProvider = ({ children }) => {
   const [isLogged,setisLogged] = useState(false)
   const [route,setRoute] = useState("Home");
   const [showOverlay, setShowOverlay] = useState(false)
+  const [announcements,setAnnouncements] = useState([])
+  const fetchData = async () => {
+    const req = await fetch(`http://localhost:8080/getAnnouncements`)
+    const res = await req.json()
+    setAnnouncements(res)
+}
   return (
     <globalContext.Provider
-      value={{ userData, setuserData, isLogged, setisLogged,login,password,setlogin,setpassword,route,setRoute,showOverlay,setShowOverlay }}
+      value={{ userData, setuserData, isLogged, setisLogged,login,password,setlogin,setpassword,route,setRoute,showOverlay,setShowOverlay,announcements,setAnnouncements,fetchData }}
     >
       {children}
     </globalContext.Provider>
