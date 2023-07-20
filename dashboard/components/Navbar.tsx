@@ -21,6 +21,7 @@ import { globalContext } from '@/context/globalContext';
 import Home from './Home'
 import Announcements from './Announcements';
 import Overlay from './Overlay';
+import ManageStudents from './ManageStudents';
 
 const drawerWidth = 240;
 
@@ -156,7 +157,7 @@ export default function MiniDrawer() {
         <DrawerHeader />
         {route === "Home" && <Home />}
         {route === "Annoucements" && <Announcements />}
-        {route === "Manage Students" && <div>Manage Students</div>}
+        {route === "Manage Students" && <ManageStudents />}
         {route === "Log Out" && <div>Log Out</div>}
       </div>
       {showOverlay && <Overlay />}
