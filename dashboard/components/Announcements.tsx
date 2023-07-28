@@ -10,10 +10,10 @@ type Annoucement = {
 }
 
 function Announcements() {
-    const { setShowOverlay,fetchData,announcements } = useContext(globalContext)
+    const { setShowOverlay,fetchAnnouncements,announcements } = useContext(globalContext)
     
     useEffect(() => {
-        fetchData()
+        fetchAnnouncements()
     },[])
 
   return (

@@ -1,4 +1,4 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, use } from "react";
 
 export const globalContext = createContext();
 export const ContextProvider = ({ children }) => {
@@ -17,14 +17,32 @@ export const ContextProvider = ({ children }) => {
   const [route,setRoute] = useState("Home");
   const [showOverlay, setShowOverlay] = useState(false)
   const [announcements,setAnnouncements] = useState([])
-  const fetchData = async () => {
+  const [currentPage,setcurrentPage] = useState(1)
+  const fetchAnnouncements = async () => {
     const req = await fetch(`http://localhost:8080/getAnnouncements`)
     const res = await req.json()
     setAnnouncements(res)
 }
+  
   return (
     <globalContext.Provider
-      value={{ userData, setuserData, isLogged, setisLogged,login,password,setlogin,setpassword,route,setRoute,showOverlay,setShowOverlay,announcements,setAnnouncements,fetchData }}
+      value={{ userData,
+              setuserData,
+              isLogged, 
+              setisLogged,
+              login,password,
+              setlogin,
+              setpassword,
+              route,
+              setRoute,
+              showOverlay,
+              setShowOverlay,
+              announcements,
+              setAnnouncements,
+              fetchAnnouncements,
+              currentPage,
+              setcurrentPage,
+               }}
     >
       {children}
     </globalContext.Provider>

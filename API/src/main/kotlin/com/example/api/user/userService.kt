@@ -1,12 +1,9 @@
 package com.example.api.user
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import org.apache.catalina.User
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestParam
 
 
 @Service
@@ -14,18 +11,32 @@ class userService {
     @Autowired
     private lateinit var db: JdbcTemplate
     private lateinit var userrepository: userRepository
-    fun getAllUsers(): List<user>{
+    fun getAllUsers(): List<com.example.api.user.User>{
         return db.query("select * from users") {
-                res, _ -> user(
+                res, _ ->
+            User(
+                id = res.getInt("id"),
+                firstname = res.getString("firstname"),
+                lastname = res.getString("lastname"),
+                login = res.getString("login"),
+                email = res.getString("email"),
+                password = res.getString("password"),
+                is_admin = res.getInt("is_admin")
+            )
+        }
+    }
+
+    fun getAllStudents(): List<Student>{
+        return db.query("select * from users where is_admin=0") {
+                res, _ -> Student(
                     id = res.getInt("id"),
                     firstname = res.getString("firstname"),
                     lastname = res.getString("lastname"),
                     login = res.getString("login"),
                     email = res.getString("email"),
-                    password = res.getString("password"),
-                    is_admin = res.getInt("is_admin")
                 )}
     }
+
     fun checkCredentials(@RequestBody userData: credentials ): LoginResponse {
         val users = getAllUsers()
         val matchingUser = users.find { it.login == userData.login && it.password == userData.password }
