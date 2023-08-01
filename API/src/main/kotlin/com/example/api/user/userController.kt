@@ -26,4 +26,7 @@ class userController {
 
     @PostMapping("/addAnnouncement")
     fun addAnnouncement(@RequestBody announcement: Announcement): String = userservice.addAnnouncement(announcement)
+
+    @GetMapping("/getGrades")
+    fun getGrades(): List<Grade> = userservice.getGrades()
 }

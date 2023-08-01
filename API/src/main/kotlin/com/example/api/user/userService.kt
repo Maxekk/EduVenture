@@ -87,4 +87,14 @@ class userService {
         db.update(insertQuery, announcement.title, announcement.upload_date, announcement.content)
         return "Announcement added successfully."
     }
+
+    fun getGrades(): List<Grade> {
+        return db.query("select * from grades") {
+                res, _ -> Grade(
+            id = res.getInt("id"),
+            student_id = res.getInt("student_id"),
+            course = res.getString("course"),
+            grade_value = res.getInt("grade_value")
+        )}
+    }
 }
