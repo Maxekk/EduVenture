@@ -5,10 +5,19 @@ import StudentField from "./StudentField";
 import PageSwitcher from "./PageSwitcher";
 import { globalContext } from "@/context/globalContext";
 
+type Student = {
+    id: number;
+    firstname: string;
+    lastname: string;
+    email: string;
+    login: string;
+  };
+
 function ManageStudents() {
   const [students, setStudents] = useState([]);
   const [grades,setGrades] = useState([]);
-  const {currentPage, setcurrentPage} = useContext(globalContext)
+  const [filteredStudents, setFilteredStudents] = useState([]);
+  const {currentPage, setcurrentPage, searchFilter, sortFilter, getAvg} = useContext(globalContext)
   const studentsPerPage = 8;
 
   useEffect(() => {
@@ -16,18 +25,59 @@ function ManageStudents() {
     fetchGrades();
   }, []);
 
+  useEffect(() => {
+    filterStudents();
+  }, [searchFilter, sortFilter, students]);
+
+  const filterStudents = () => {
+    let filteredResult = students;
+    console.log(filteredResult)
+    // Filter based on searchFilter
+    if (searchFilter.trim() !== "") {
+      filteredResult = students.filter((student: Student) =>
+        student.lastname.toLowerCase().includes(searchFilter.toLowerCase())
+      );
+    }
+
+    // Sort based on sortFilter
+    if (sortFilter === "id") {
+      filteredResult.sort((a: Student, b: Student) => a.id - b.id);
+    } else if (sortFilter === "firstname") {
+      filteredResult.sort((a: Student, b: Student) =>
+        a.firstname.localeCompare(b.firstname)
+      );
+    } else if (sortFilter === "lastname") {
+      filteredResult.sort((a: Student, b: Student) =>
+        a.lastname.localeCompare(b.lastname)
+      );
+    } 
+    else if (sortFilter === "gradeAvg") {
+        filteredResult.sort((a: Student, b: Student) => {
+          const s1Grades = grades.filter(({student_id}) => student_id === a.id)
+          const avgAArray = s1Grades.map(({grade_value}: any) => grade_value);
+          const s2Grades = grades.filter(({student_id}) => student_id === b.id)
+          const avgBArray = s2Grades.map(({grade_value}: any) => grade_value);
+          const avgA = getAvg(avgAArray);
+          const avgB = getAvg(avgBArray);
+          return avgB - avgA;
+        });
+    }
+    setFilteredStudents([...filteredResult]);
+  };
+
+  //Getting data
   const fetchStudents = async () => {
     const req = await fetch(`http://localhost:8080/getStudents`);
     const res = await req.json();
     setStudents(res);
   };
-
   const fetchGrades = async () => {
     const req = await fetch(`http://localhost:8080/getGrades`);
     const res = await req.json();
     setGrades(res);
   }
 
+  //Pagination logic
   const decreasePage = () => {
     if (currentPage > 1) {
       setcurrentPage((prev: any) => prev - 1);
@@ -43,7 +93,10 @@ function ManageStudents() {
 
   const indexOfLastStudent = currentPage * studentsPerPage;
   const indexOfFirstStudent = indexOfLastStudent - studentsPerPage;
-  const currentStudents = students.slice(indexOfFirstStudent, indexOfLastStudent);
+  const currentStudents = filteredStudents.slice(
+    indexOfFirstStudent,
+    indexOfLastStudent
+  );
 
   return (
     <>
@@ -51,7 +104,7 @@ function ManageStudents() {
         <div>
           <SearchBar />
         </div>
-        <SortSelect />
+        <SortSelect filterStudents={filterStudents}/>
       </div>
       <div className="w-[100%] h-[90%] flex items-center justify-center flex-col">
         <div className="w-[80%] h-[100%] flex items-center flex-col">
@@ -78,7 +131,17 @@ function ManageStudents() {
               Manage
             </div>
           </div>
-          {currentStudents.map(({ id, firstname, lastname, email, login }): any => {
+          {// Listing Students
+          currentStudents
+          .filter((student: any) => {
+            if(searchFilter === "" || searchFilter === " "){
+                return student
+            }
+            else if(student.lastname.toLowerCase().includes(searchFilter.toLowerCase())){
+                return student
+            }
+          })
+          .map(({ id, firstname, lastname, email, login }): any => {
               const studentGrades = grades.filter(({student_id}) => student_id === id)
             return (
               <StudentField

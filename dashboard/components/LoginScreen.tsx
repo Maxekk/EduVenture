@@ -9,7 +9,6 @@ type Props = {};
 function LoginScreen({}: Props) {
   const { setuserData, setisLogged, login, password } =
     useContext(globalContext);
-  //fix the bug with capturing info from inputs, it works just on second try
   async function loginUser() {
     const credentials = {
       login: login,

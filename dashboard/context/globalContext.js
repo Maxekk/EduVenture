@@ -18,11 +18,26 @@ export const ContextProvider = ({ children }) => {
   const [showOverlay, setShowOverlay] = useState(false)
   const [announcements,setAnnouncements] = useState([])
   const [currentPage,setcurrentPage] = useState(1)
+  const [searchFilter,setSearchFilter] = useState("")
+  const [sortFilter,setSortFilter] = useState("")
   const fetchAnnouncements = async () => {
     const req = await fetch(`http://localhost:8080/getAnnouncements`)
     const res = await req.json()
     setAnnouncements(res)
 }
+
+const getAvg = (gradesArray) => {
+  if (gradesArray.length === 0) {
+      return "0";
+  }
+
+  let sum = 0;
+  for (const grade_value of gradesArray) {
+      sum += grade_value;
+  }
+  const average = sum / gradesArray.length;
+  return average.toFixed(2);
+};
   
   return (
     <globalContext.Provider
@@ -42,6 +57,11 @@ export const ContextProvider = ({ children }) => {
               fetchAnnouncements,
               currentPage,
               setcurrentPage,
+              searchFilter,
+              setSearchFilter,
+              sortFilter,
+              setSortFilter,
+              getAvg
                }}
     >
       {children}

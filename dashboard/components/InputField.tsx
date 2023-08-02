@@ -7,7 +7,7 @@ type Props = {
 };
 
 function InputField({ label, isPassword }: Props) {
-  const { login, setlogin, password, setpassword } = useContext(globalContext);
+  const { setlogin, password, setpassword } = useContext(globalContext);
 
   const handlePassword = (e: Event) => {
     const target = e.target as HTMLInputElement;

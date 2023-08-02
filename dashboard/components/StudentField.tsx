@@ -1,4 +1,5 @@
-import React from "react";
+import { globalContext } from "@/context/globalContext";
+import React, { useContext } from "react";
 
 type Grade = {
   id: number;
@@ -18,22 +19,7 @@ type Props = {
 
 function StudentField({id,firstName,lastName,email,login,grades}: Props) {
   const studentGradesValuesOnly = grades.map(({grade_value}: any) => grade_value);
-
-  const getAvg = (gradesArray: Array<number>): string => {
-    if (gradesArray.length === 0) {
-        return "0";
-    }
-
-    let sum = 0;
-    for (const grade_value of gradesArray) {
-        sum += grade_value;
-    }
-
-    const average = sum / gradesArray.length;
-    console.log(`Student ${id} grades: ${gradesArray} avg: ${average} sum: ${sum}`);
-    return average.toFixed(2);
-};
-
+  const { getAvg } = useContext(globalContext)
 
   return (
     <div className="w-[90%] h-[7%] text-[#666363] text-xl flex shadow-xl bg-[#D9D9D9] mt-6 transition-[0.5s] hover:scale-105">
