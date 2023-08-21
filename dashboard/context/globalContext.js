@@ -9,60 +9,65 @@ export const ContextProvider = ({ children }) => {
     emaail: "",
     login: "",
     password: "",
-    is_admin: ""
+    is_admin: "",
   });
-  const [login,setlogin] = useState("")
-  const [password,setpassword] = useState("")
-  const [isLogged,setisLogged] = useState(false)
-  const [route,setRoute] = useState("Home");
-  const [showOverlay, setShowOverlay] = useState(false)
-  const [announcements,setAnnouncements] = useState([])
-  const [currentPage,setcurrentPage] = useState(1)
-  const [searchFilter,setSearchFilter] = useState("")
-  const [sortFilter,setSortFilter] = useState("")
+  const [login, setlogin] = useState("");
+  const [password, setpassword] = useState("");
+  const [isLogged, setisLogged] = useState(false);
+  const [route, setRoute] = useState("Home");
+  const [showAnnouncementOverlay, setShowAnnouncementOverlay] = useState(false);
+  const [showEditOverlay, setShowEditOverlay] = useState(false);
+  const [announcements, setAnnouncements] = useState([]);
+  const [currentPage, setcurrentPage] = useState(1);
+  const [searchFilter, setSearchFilter] = useState("");
+  const [sortFilter, setSortFilter] = useState("");
   const fetchAnnouncements = async () => {
-    const req = await fetch(`http://localhost:8080/getAnnouncements`)
-    const res = await req.json()
-    setAnnouncements(res)
-}
+    const req = await fetch(`http://localhost:8080/getAnnouncements`);
+    const res = await req.json();
+    setAnnouncements(res);
+  };
 
-const getAvg = (gradesArray) => {
-  if (gradesArray.length === 0) {
+  const getAvg = (gradesArray) => {
+    if (gradesArray.length === 0) {
       return "0";
-  }
+    }
 
-  let sum = 0;
-  for (const grade_value of gradesArray) {
+    let sum = 0;
+    for (const grade_value of gradesArray) {
       sum += grade_value;
-  }
-  const average = sum / gradesArray.length;
-  return average.toFixed(2);
-};
-  
+    }
+    const average = sum / gradesArray.length;
+    return average.toFixed(2);
+  };
+
   return (
     <globalContext.Provider
-      value={{ userData,
-              setuserData,
-              isLogged, 
-              setisLogged,
-              login,password,
-              setlogin,
-              setpassword,
-              route,
-              setRoute,
-              showOverlay,
-              setShowOverlay,
-              announcements,
-              setAnnouncements,
-              fetchAnnouncements,
-              currentPage,
-              setcurrentPage,
-              searchFilter,
-              setSearchFilter,
-              sortFilter,
-              setSortFilter,
-              getAvg
-               }}
+      value={{
+        userData,
+        setuserData,
+        isLogged,
+        setisLogged,
+        login,
+        password,
+        setlogin,
+        setpassword,
+        route,
+        setRoute,
+        showAnnouncementOverlay,
+        setShowAnnouncementOverlay,
+        announcements,
+        setAnnouncements,
+        fetchAnnouncements,
+        currentPage,
+        setcurrentPage,
+        searchFilter,
+        setSearchFilter,
+        sortFilter,
+        setSortFilter,
+        getAvg,
+        showEditOverlay,
+        setShowEditOverlay,
+      }}
     >
       {children}
     </globalContext.Provider>
