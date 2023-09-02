@@ -26,10 +26,9 @@ function StudentField({
   login,
   grades,
 }: Props) {
-  const studentGradesValuesOnly = grades.map(
-    ({ grade_value }: any) => grade_value
-  );
-  const { getAvg, setShowEditOverlay } = useContext(globalContext);
+  const studentGradesValuesOnly = grades.map(({ grade_value }) => grade_value);
+  const { getAvg, setShowEditOverlay, setEditStudentData } =
+    useContext(globalContext);
 
   return (
     <div className="w-[90%] h-[7%] text-[#666363] text-xl flex shadow-xl bg-[#D9D9D9] mt-6 transition-[1s] hover:scale-105">
@@ -55,6 +54,14 @@ function StudentField({
         <button
           onClick={() => {
             setShowEditOverlay(true);
+            setEditStudentData({
+              id: id,
+              firstName: firstName,
+              lastName: lastName,
+              email: email,
+              login: login,
+              grades: grades,
+            });
           }}
         >
           <AiFillEdit className="w-[35px] h-[35px] transition-[0.5s] hover:text-green-800" />

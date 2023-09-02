@@ -16,8 +16,8 @@ class userService {
                 res, _ ->
             User(
                 id = res.getInt("id"),
-                firstname = res.getString("firstname"),
-                lastname = res.getString("lastname"),
+                firstName = res.getString("firstname"),
+                lastName = res.getString("lastname"),
                 login = res.getString("login"),
                 email = res.getString("email"),
                 password = res.getString("password"),
@@ -25,6 +25,28 @@ class userService {
             )
         }
     }
+
+    fun modStudentData(@RequestBody studentData: StudentData): String {
+        try{
+            val updateQuery = "UPDATE users " +
+                    "SET " +
+                    "  firstName = '${studentData.firstName}', " +
+                    "  lastName = '${studentData.lastName}', " +
+                    "  email = '${studentData.email}', " +
+                    "  login = '${studentData.login}' " +
+                    "WHERE " +
+                    "  id = ${studentData.id}"
+
+
+            db.update(updateQuery)
+            return "User data moded sucesfully"
+        }
+        catch (e: Exception){
+            println(e)
+            return "Something went wrong: $e"
+        }
+    }
+
 
     fun getAllStudents(): List<Student>{
         return db.query("select * from users where is_admin=0") {
@@ -37,15 +59,15 @@ class userService {
                 )}
     }
 
-    fun checkCredentials(@RequestBody userData: credentials ): LoginResponse {
+    fun checkCredentials(@RequestBody userData: Credentials ): LoginResponse {
         val users = getAllUsers()
         val matchingUser = users.find { it.login == userData.login && it.password == userData.password }
         if(matchingUser != null){
             return LoginResponse(
                     true,
                     matchingUser.id,
-                    matchingUser.firstname,
-                    matchingUser.lastname,
+                    matchingUser.firstName,
+                    matchingUser.lastName,
                     matchingUser.email,
                     matchingUser.login,
                     matchingUser.password,

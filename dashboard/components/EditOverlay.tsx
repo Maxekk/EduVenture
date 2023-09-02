@@ -1,11 +1,60 @@
 import { globalContext } from "@/context/globalContext";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Grade from "./Grade";
+import { data } from "autoprefixer";
 
 type Props = {};
-
+type GradeType = {
+  id: number;
+  student_id: number;
+  course: string;
+  grade_value: number;
+};
+type editData = {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  login: string;
+};
 function EditOverlay({}: Props) {
-  const { setShowEditOverlay } = useContext(globalContext);
+  const { setShowEditOverlay, editStudentData, setEditStudentData } =
+    useContext(globalContext);
+
+  const [dataToEdit, setDataToEdit] = useState({
+    id: editStudentData.id,
+    firstName: editStudentData.firstName,
+    lastName: editStudentData.lastName,
+    email: editStudentData.email,
+    login: editStudentData.login,
+  });
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    fieldName: string
+  ) => {
+    const { value } = e.target;
+    setDataToEdit((prev: editData) => ({
+      ...prev,
+      [fieldName]: value,
+    }));
+    console.log(dataToEdit);
+  };
+
+  const modData = async () => {
+    // TODO, add a notification using toastify or smth so theuser knows if the operation was succed
+    try {
+      const req = await fetch(`http://localhost:8080/modStudent`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataToEdit),
+      });
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   return (
     <div className="fixed inset-0 bg-opacity-70 backdrop-filter backdrop-blur-sm flex flex-col items-center justify-center gap-5 bg-[#585656]">
@@ -20,6 +69,8 @@ function EditOverlay({}: Props) {
               <input
                 type="text"
                 className="w-[60%] h-[35%] bg-[#F8F7F7] border-2 border-[#6B6A6A] text-xl"
+                value={dataToEdit.firstName}
+                onChange={(e) => handleInputChange(e, "firstName")}
               ></input>
             </div>
             <div className="h-[100%] w-[50%] flex flex-col justify-center items-center gap-5">
@@ -27,6 +78,8 @@ function EditOverlay({}: Props) {
               <input
                 type="text"
                 className="w-[60%] h-[35%] bg-[#F8F7F7] border-2 border-[#6B6A6A]"
+                value={dataToEdit.lastName}
+                onChange={(e) => handleInputChange(e, "lastName")}
               ></input>
             </div>
           </div>
@@ -36,6 +89,8 @@ function EditOverlay({}: Props) {
               <input
                 type="text"
                 className="w-[60%] h-[35%] bg-[#F8F7F7] border-2 border-[#6B6A6A]"
+                value={dataToEdit.email}
+                onChange={(e) => handleInputChange(e, "email")}
               ></input>
             </div>
             <div className="h-[100%] w-[50%] flex flex-col justify-center items-center gap-5">
@@ -43,6 +98,8 @@ function EditOverlay({}: Props) {
               <input
                 type="text"
                 className="w-[60%] h-[35%] bg-[#F8F7F7] border-2 border-[#6B6A6A]"
+                value={dataToEdit.login}
+                onChange={(e) => handleInputChange(e, "login")}
               ></input>
             </div>
           </div>
@@ -53,26 +110,10 @@ function EditOverlay({}: Props) {
           Grades
         </div>
         <div className="w-[100%] h-inherit flex p-3 gap-2 flex-wrap">
-          <Grade />
-          <Grade />
-          <Grade />
-          <Grade />
-          <Grade />
-          <Grade />
-          <Grade />
-          <Grade />
-          <Grade />
-          <Grade />
-          <Grade />
-          <Grade />
-          <Grade />
-          <Grade />
-          <Grade />
-          <Grade />
-          <Grade />
-          <Grade />
-          <Grade />
-          <Grade />
+          {editStudentData.grades.map((value: GradeType) => {
+            return <Grade gradeData={value} />;
+          })}
+
           <button className="bg-[#7E7E7E] w-[60px] h-[60px] text-4xl text-white flex justify-center items-center transition-[0.5s] hover:bg-[#3a3a3a]">
             +
           </button>
@@ -82,8 +123,16 @@ function EditOverlay({}: Props) {
         <button
           className="bg-[#B4DAA8] w-[130px] h-[50px] ml-4 rounded-md text-white text-xl font-bold transition-[0.5s] hover:bg-[#73ce57]"
           onClick={() => {
-            // adding feature
+            modData();
             setShowEditOverlay(false);
+            setEditStudentData({
+              id: null,
+              firstName: "",
+              lastName: "",
+              email: "",
+              login: "",
+              grades: [],
+            });
           }}
         >
           Add
@@ -92,6 +141,14 @@ function EditOverlay({}: Props) {
           className="bg-[#EEEAEA] w-[130px] h-[50px] rounded-md text-[#6C6C6C] text-xl font-bold transition-[0.5s] hover:bg-[#a2a2a2]"
           onClick={() => {
             setShowEditOverlay(false);
+            setEditStudentData({
+              id: null,
+              firstName: "",
+              lastName: "",
+              email: "",
+              login: "",
+              grades: [],
+            });
           }}
         >
           Cancel

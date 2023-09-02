@@ -21,6 +21,15 @@ export const ContextProvider = ({ children }) => {
   const [currentPage, setcurrentPage] = useState(1);
   const [searchFilter, setSearchFilter] = useState("");
   const [sortFilter, setSortFilter] = useState("");
+  const [editStudentData, setEditStudentData] = useState({
+    id: null,
+    firstName: "",
+    lastName: "",
+    email: "",
+    login: "",
+    grades: [],
+  });
+
   const fetchAnnouncements = async () => {
     const req = await fetch(`http://localhost:8080/getAnnouncements`);
     const res = await req.json();
@@ -67,6 +76,8 @@ export const ContextProvider = ({ children }) => {
         getAvg,
         showEditOverlay,
         setShowEditOverlay,
+        editStudentData,
+        setEditStudentData,
       }}
     >
       {children}

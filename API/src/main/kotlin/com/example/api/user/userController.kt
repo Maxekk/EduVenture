@@ -10,7 +10,7 @@ class userController {
     private lateinit var userservice: userService
 
     @PostMapping("/login")
-    fun checkCredentials(@RequestBody userData: credentials): LoginResponse = userservice.checkCredentials(userData)
+    fun checkCredentials(@RequestBody userData: Credentials): LoginResponse = userservice.checkCredentials(userData)
 
     @GetMapping("/getUsers")
     fun getAllUsers(): List<com.example.api.user.User> = userservice.getAllUsers()
@@ -29,4 +29,7 @@ class userController {
 
     @GetMapping("/getGrades")
     fun getGrades(): List<Grade> = userservice.getGrades()
+
+    @PostMapping("/modStudent")
+    fun modStudentData(@RequestBody studentData: StudentData): String = userservice.modStudentData(studentData)
 }
