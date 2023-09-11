@@ -4,6 +4,8 @@ import SearchBar from "./SearchBar";
 import StudentField from "./StudentField";
 import PageSwitcher from "./PageSwitcher";
 import { globalContext } from "@/context/globalContext";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 type Student = {
     id: number;
@@ -14,10 +16,8 @@ type Student = {
   };
 
 function ManageStudents() {
-  const [students, setStudents] = useState([]);
-  const [grades,setGrades] = useState([]);
-  const [filteredStudents, setFilteredStudents] = useState([]);
-  const {currentPage, setcurrentPage, searchFilter, sortFilter, getAvg} = useContext(globalContext)
+  const [filteredStudents, setFilteredStudents] = useState<Student[]>([]);
+  const {currentPage, setcurrentPage, searchFilter, sortFilter, getAvg, fetchStudents,fetchGrades, students, grades} = useContext(globalContext)
   const studentsPerPage = 8;
 
   useEffect(() => {
@@ -53,9 +53,9 @@ function ManageStudents() {
     } 
     else if (sortFilter === "gradeAvg") {
         filteredResult.sort((a: Student, b: Student) => {
-          const s1Grades = grades.filter(({student_id}) => student_id === a.id)
+          const s1Grades = grades.filter(({student_id}: any) => student_id === a.id)
           const avgAArray = s1Grades.map(({grade_value}: any) => grade_value);
-          const s2Grades = grades.filter(({student_id}) => student_id === b.id)
+          const s2Grades = grades.filter(({student_id}: any) => student_id === b.id)
           const avgBArray = s2Grades.map(({grade_value}: any) => grade_value);
           const avgA = getAvg(avgAArray);
           const avgB = getAvg(avgBArray);
@@ -66,16 +66,7 @@ function ManageStudents() {
   };
 
   //Getting data
-  const fetchStudents = async () => {
-    const req = await fetch(`http://localhost:8080/getStudents`);
-    const res = await req.json();
-    setStudents(res);
-  };
-  const fetchGrades = async () => {
-    const req = await fetch(`http://localhost:8080/getGrades`);
-    const res = await req.json();
-    setGrades(res);
-  }
+  
 
   //Pagination logic
   const decreasePage = () => {
@@ -142,7 +133,7 @@ function ManageStudents() {
             }
           })
           .map(({ id, firstname, lastname, email, login }): any => {
-              const studentGrades = grades.filter(({student_id}) => student_id === id)
+              const studentGrades = grades.filter(({student_id}: any) => student_id === id)
             return (
               <StudentField
                 id={id}
@@ -160,6 +151,7 @@ function ManageStudents() {
           decreasePage={decreasePage}
           increasePage={increasePage}
         />
+         <ToastContainer />
       </div>
     </>
   );

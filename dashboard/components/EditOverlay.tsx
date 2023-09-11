@@ -1,9 +1,7 @@
 import { globalContext } from "@/context/globalContext";
 import React, { useContext, useState } from "react";
 import Grade from "./Grade";
-import { data } from "autoprefixer";
 
-type Props = {};
 type GradeType = {
   id: number;
   student_id: number;
@@ -17,8 +15,8 @@ type editData = {
   email: string;
   login: string;
 };
-function EditOverlay({}: Props) {
-  const { setShowEditOverlay, editStudentData, setEditStudentData } =
+function EditOverlay() {
+  const { setShowEditOverlay, editStudentData, setEditStudentData, invokeSuccesToast, invokeErrorToast, fetchStudents } =
     useContext(globalContext);
 
   const [dataToEdit, setDataToEdit] = useState({
@@ -42,7 +40,6 @@ function EditOverlay({}: Props) {
   };
 
   const modData = async () => {
-    // TODO, add a notification using toastify or smth so theuser knows if the operation was succed
     try {
       const req = await fetch(`http://localhost:8080/modStudent`, {
         method: "POST",
@@ -51,8 +48,11 @@ function EditOverlay({}: Props) {
         },
         body: JSON.stringify(dataToEdit),
       });
+      invokeSuccesToast()
+      fetchStudents()
     } catch (error) {
       console.error("Error:", error);
+      invokeErrorToast()
     }
   };
 
