@@ -65,9 +65,6 @@ function ManageStudents() {
     setFilteredStudents([...filteredResult]);
   };
 
-  //Getting data
-  
-
   //Pagination logic
   const decreasePage = () => {
     if (currentPage > 1) {

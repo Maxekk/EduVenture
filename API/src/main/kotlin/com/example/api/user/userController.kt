@@ -32,4 +32,7 @@ class userController {
 
     @PostMapping("/modStudent")
     fun modStudentData(@RequestBody studentData: StudentData): String = userservice.modStudentData(studentData)
+
+    @PostMapping("/addGrade")
+    fun addGrade(@RequestBody grade: Grade): String = userservice.addGrade(grade)
 }

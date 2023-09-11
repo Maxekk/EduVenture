@@ -119,4 +119,10 @@ class userService {
             grade_value = res.getInt("grade_value")
         )}
     }
+
+    fun addGrade(grade: Grade): String {
+        val insertQuery = "INSERT INTO grades (student_id, course, grade_value) VALUES (?, ?, ?)"
+        db.update(insertQuery, grade.student_id, grade.course, grade.grade_value)
+        return "Grade added successfully"
+    }
 }
