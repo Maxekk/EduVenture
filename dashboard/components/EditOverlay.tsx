@@ -1,6 +1,7 @@
 import { globalContext } from "@/context/globalContext";
 import React, { useContext, useState } from "react";
 import Grade from "./Grade";
+import AddGradeOverlay from "./AddGradeOverlay";
 
 type GradeType = {
   id: number;
@@ -16,7 +17,7 @@ type editData = {
   login: string;
 };
 function EditOverlay() {
-  const { setShowEditOverlay, editStudentData, setEditStudentData, invokeSuccesToast, invokeErrorToast, fetchStudents } =
+  const { setShowEditOverlay, editStudentData, setEditStudentData, invokeSuccesToast, invokeErrorToast, fetchStudents, showGradeOverlay, setShowGradeOverlay } =
     useContext(globalContext);
 
   const [dataToEdit, setDataToEdit] = useState({
@@ -114,7 +115,7 @@ function EditOverlay() {
             return <Grade gradeData={value} />;
           })}
 
-          <button className="bg-[#7E7E7E] w-[60px] h-[60px] text-4xl text-white flex justify-center items-center transition-[0.5s] hover:bg-[#3a3a3a]">
+          <button className="bg-[#7E7E7E] w-[60px] h-[60px] text-4xl text-white flex justify-center items-center transition-[0.5s] hover:bg-[#3a3a3a]" onClick={setShowGradeOverlay(true)}>
             +
           </button>
         </div>
@@ -154,6 +155,7 @@ function EditOverlay() {
           Cancel
         </button>
       </div>
+      {showGradeOverlay ? <AddGradeOverlay /> : <></>}
     </div>
   );
 }
