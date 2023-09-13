@@ -12,7 +12,6 @@ function InputField({ label, isPassword }: Props) {
   const handlePassword = (e: Event) => {
     const target = e.target as HTMLInputElement;
     setpassword(target.value);
-    console.log(password);
   };
 
   const handleLogin = (e: Event) => {

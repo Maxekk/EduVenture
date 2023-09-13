@@ -44,7 +44,7 @@ function LoginScreen({}: Props) {
         <div className="w-[40%] h-[100%]">
           <div className="w-[100%] h-[100%] flex flex-col gap-5 justify-center">
             <div className="w-[100%] h-[100%] flex flex-col mt-0  items-center">
-              <InputField label="Email" isPassword={false} />
+              <InputField label="Login" isPassword={false} />
               <InputField label="Password" isPassword={true} />
               <button
                 className="bg-transparent w-[250px] h-[70px] mt-24 text-green-800 font-mono text-3xl border-4 border-green-500 transition-[1s] hover:bg-green-500 shadow-md"
