@@ -53,14 +53,14 @@ export const ContextProvider = ({ children }) => {
     return average.toFixed(2);
   };
 
-  const invokeSuccesToast = () => {
-    toast.success('Succesfully modified student data', {
+  const invokeSuccesToast = (text) => {
+    toast.success(text, {
       className: 'bg-green-500 text-white',
     });
   }
 
-  const invokeErrorToast = () => {
-    toast.error('Sorry, looks like something went wrong', {
+  const invokeErrorToast = (text) => {
+    toast.error(text, {
       className: 'bg-red-500 text-white',
     });
   }

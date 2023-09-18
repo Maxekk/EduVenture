@@ -125,4 +125,15 @@ class userService {
         db.update(insertQuery, grade.student_id, grade.course, grade.grade_value)
         return "Grade added successfully"
     }
+
+    fun deleteAnnouncement(@RequestBody requestPayload: Map<String, Int>): String {
+        val id = requestPayload["id"]
+        if (id != null) {
+            val deleteQuery = "DELETE FROM announcements WHERE announcements.id = $id"
+            db.update(deleteQuery)
+            return "Announcement with ID $id deleted successfully"
+        } else {
+            return "Invalid request payload"
+        }
+    }
 }

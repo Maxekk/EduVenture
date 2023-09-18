@@ -57,11 +57,11 @@ function EditOverlay() {
         },
         body: JSON.stringify(dataToEdit),
       });
-      invokeSuccesToast();
+      invokeSuccesToast("Sucessfully modified student data");
       fetchStudents();
     } catch (error) {
       console.error("Error:", error);
-      invokeErrorToast();
+      invokeErrorToast("Sorry something went wrong");
     }
   };
 

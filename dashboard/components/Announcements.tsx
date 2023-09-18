@@ -4,6 +4,7 @@ import { useContext, useEffect } from "react";
 import { globalContext } from "@/context/globalContext";
 
 type Annoucement = {
+  id: Number;
   title: String;
   upload_date: String;
   content: String;
@@ -39,6 +40,7 @@ function Announcements() {
           .map((item: Annoucement) => {
             return (
               <Announcement
+                id={item.id}
                 title={item.title}
                 upload_date={item.upload_date}
                 content={item.content}
