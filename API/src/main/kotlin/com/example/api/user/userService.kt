@@ -128,12 +128,37 @@ class userService {
 
     fun deleteAnnouncement(@RequestBody requestPayload: Map<String, Int>): String {
         val id = requestPayload["id"]
-        if (id != null) {
-            val deleteQuery = "DELETE FROM announcements WHERE announcements.id = $id"
-            db.update(deleteQuery)
-            return "Announcement with ID $id deleted successfully"
+        return if (id != null) {
+            try {
+                val deleteQuery = "DELETE FROM announcements WHERE announcements.id = $id"
+                db.update(deleteQuery)
+                "Announcement with ID $id deleted successfully"
+            } catch (e: Exception) {
+                "An error occurred while deleting the announcement: ${e.message}"
+            }
         } else {
-            return "Invalid request payload"
+            "Invalid request payload"
         }
     }
+
+    fun deleteStudent(@RequestBody requestPayload: Map<String, Int>): String {
+        val id = requestPayload["id"]
+        return if (id != null) {
+            try {
+                val deleteStudentQuery = "DELETE FROM users WHERE users.id = $id"
+                val deleteAssociatedGradesQuery = "DELETE FROM grades WHERE student_id = $id"
+
+                db.update(deleteAssociatedGradesQuery)
+                db.update(deleteStudentQuery)
+
+                "User with ID $id deleted successfully"
+            } catch (e: Exception) {
+                "An error occurred while deleting the student: ${e.message}"
+            }
+        } else {
+            "Invalid request payload"
+        }
+    }
+
+
 }

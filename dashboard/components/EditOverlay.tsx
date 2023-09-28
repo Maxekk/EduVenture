@@ -48,6 +48,24 @@ function EditOverlay() {
     console.log(dataToEdit);
   };
 
+  const deleteStudent = async () => {
+    try{
+      const req = await fetch(`http://localhost:8080/deleteStudent`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({id: editStudentData.id}),
+      });
+      invokeSuccesToast(`Sucessfully deleted student with id:${editStudentData.id}`);
+      fetchStudents();
+    }
+    catch (error) {
+      console.error("Error:", error);
+      invokeErrorToast("Sorry something went wrong");
+    }
+  }
+
   const modData = async () => {
     try {
       const req = await fetch(`http://localhost:8080/modStudent`, {
@@ -133,7 +151,19 @@ function EditOverlay() {
           </button>
         </div>
       </div>
-      <div className="w-[45vw] h-[7vh] mt-4 flex flex-row-reverse">
+      <div className="w-[45vw] h-[7vh] mt-4 flex">
+        <div className="w-[50%] h-[100%]">
+        <button
+            className="bg-[#d69696] w-[130px] h-[50px] rounded-md text-white text-xl font-bold transition-[0.5s] hover:bg-[#ea5454]"
+            onClick={() => {
+              deleteStudent(),
+              setShowEditOverlay(false)
+            }}
+            >
+            Delete
+          </button>
+        </div>
+        <div className="w-[50%] h-[100%] flex flex-row-reverse">
         <button
           className="bg-[#B4DAA8] w-[130px] h-[50px] ml-4 rounded-md text-white text-xl font-bold transition-[0.5s] hover:bg-[#73ce57]"
           onClick={() => {
@@ -167,6 +197,7 @@ function EditOverlay() {
         >
           Cancel
         </button>
+        </div>
       </div>
       {showGradeOverlay ? <AddGradeOverlay /> : <div></div>}
     </div>
