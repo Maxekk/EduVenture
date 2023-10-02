@@ -41,4 +41,7 @@ class userController {
 
     @PostMapping("deleteStudent")
     fun deleteStudent(@RequestBody requestPayload: Map<String, Int>): String = userservice.deleteStudent(requestPayload)
+
+    @PostMapping("deleteGrade")
+    fun deleteGrade(@RequestBody requestPayload: Map<String, Int>): String = userservice.deleteGrade(requestPayload)
 }

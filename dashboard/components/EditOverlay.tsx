@@ -179,7 +179,7 @@ function EditOverlay() {
             });
           }}
         >
-          Add
+          Modify
         </button>
         <button
           className="bg-[#EEEAEA] w-[130px] h-[50px] rounded-md text-[#6C6C6C] text-xl font-bold transition-[0.5s] hover:bg-[#a2a2a2]"

@@ -160,5 +160,19 @@ class userService {
         }
     }
 
+    fun deleteGrade(@RequestBody requestPayload: Map<String, Int>): String {
+        val id = requestPayload["id"]
+        return if (id != null) {
+            try {
+                val deleteGradeQuery = "DELETE FROM grades WHERE id = $id"
+                db.update(deleteGradeQuery)
+                "Grade with ID $id deleted successfully"
+            } catch (e: Exception) {
+                "An error occurred while deleting grade: ${e.message}"
+            }
+        } else {
+            "Invalid request payload"
+        }
+    }
 
 }
