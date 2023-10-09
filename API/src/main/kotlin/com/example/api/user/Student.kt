@@ -9,4 +9,6 @@ class Student(
     val lastname: String,
     val email: String,
     val login: String,
+    val password: String,
+    val is_admin: Boolean
 ) {}

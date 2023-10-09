@@ -47,6 +47,16 @@ class userService {
         }
     }
 
+    fun createNewUsr(@RequestBody studentData: Student): String {
+        return try{
+            val insertQuery = "INSERT INTO users (firstname,lastname,email,login,password,is_admin) VALUES (?,?,?,?,?,?)"
+            db.update(insertQuery,studentData.firstname,studentData.lastname,studentData.email,studentData.login,studentData.password, studentData.is_admin)
+            "Student created succesfully"
+        } catch (e: Exception){
+            "Sorry something went wrong"
+        }
+    }
+
 
     fun getAllStudents(): List<Student>{
         return db.query("select * from users where is_admin=0") {
@@ -56,6 +66,8 @@ class userService {
                     lastname = res.getString("lastname"),
                     login = res.getString("login"),
                     email = res.getString("email"),
+                    password = res.getString("password"),
+                    is_admin = res.getBoolean("is_admin")
                 )}
     }
 
