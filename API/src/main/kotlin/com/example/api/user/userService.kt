@@ -47,10 +47,10 @@ class userService {
         }
     }
 
-    fun createNewUsr(@RequestBody studentData: Student): String {
+    fun createNewUsr(@RequestBody user: User): String {
         return try{
             val insertQuery = "INSERT INTO users (firstname,lastname,email,login,password,is_admin) VALUES (?,?,?,?,?,?)"
-            db.update(insertQuery,studentData.firstname,studentData.lastname,studentData.email,studentData.login,studentData.password, studentData.is_admin)
+            db.update(insertQuery,user.firstName,user.lastName,user.email,user.login,user.password, user.is_admin)
             "Student created succesfully"
         } catch (e: Exception){
             "Sorry something went wrong"

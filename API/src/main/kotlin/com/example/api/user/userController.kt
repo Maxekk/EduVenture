@@ -34,7 +34,7 @@ class userController {
     fun modStudentData(@RequestBody studentData: StudentData): String = userservice.modStudentData(studentData)
 
     @PostMapping("/createNewUsr")
-    fun createNewUsr(@RequestBody studentData: Student): String = userservice.createNewUsr(studentData)
+    fun createNewUsr(@RequestBody user: User): String = userservice.createNewUsr(user)
 
     @PostMapping("/addGrade")
     fun addGrade(@RequestBody grade: Grade): String = userservice.addGrade(grade)

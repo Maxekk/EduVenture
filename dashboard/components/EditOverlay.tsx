@@ -45,7 +45,6 @@ function EditOverlay() {
       ...prev,
       [fieldName]: value,
     }));
-    console.log(dataToEdit);
   };
 
   const deleteStudent = async () => {

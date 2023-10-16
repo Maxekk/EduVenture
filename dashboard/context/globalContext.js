@@ -25,6 +25,7 @@ export const ContextProvider = ({ children }) => {
   const [searchFilter, setSearchFilter] = useState("");
   const [sortFilter, setSortFilter] = useState("");
   const [showGradeOverlay, setShowGradeOverlay] = useState(false);
+  const [showAddStudentOverlay,setShowAddStudentOverlay] = useState(false);
   const [editStudentData, setEditStudentData] = useState({
     id: null,
     firstName: "",
@@ -114,7 +115,9 @@ export const ContextProvider = ({ children }) => {
         fetchStudents,
         fetchGrades,
         showGradeOverlay,
-        setShowGradeOverlay
+        setShowGradeOverlay,
+        showAddStudentOverlay,
+        setShowAddStudentOverlay
       }}
     >
       {children}

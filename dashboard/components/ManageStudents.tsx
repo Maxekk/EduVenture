@@ -7,6 +7,7 @@ import { globalContext } from "@/context/globalContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { HiUserAdd } from "react-icons/Hi";
+import AddStudentOverlay from "./AddStudentOverlay";
 
 type Student = {
   id: number;
@@ -28,6 +29,8 @@ function ManageStudents() {
     fetchGrades,
     students,
     grades,
+    showAddStudentOverlay,
+    setShowAddStudentOverlay
   } = useContext(globalContext);
   const studentsPerPage = 8;
 
@@ -172,13 +175,14 @@ function ManageStudents() {
         <button
           className="absolute bottom-10 right-10 p-2 bg-[#D9D9D9] text-white rounded-full border-[#B3AFAF] shadow-xl w-[70px] h-[70px] transition-[0.5s] border-[1px] text-4xl hover:bg-[#bebebe] flex justify-center items-center"
           onClick={() => {
-            //TODO ADD LOGIC
+            setShowAddStudentOverlay(true)
           }}
         >
           <HiUserAdd />
         </button>
         <ToastContainer />
       </div>
+        {showAddStudentOverlay ? <AddStudentOverlay /> : <div></div>}
     </>
   );
 }
