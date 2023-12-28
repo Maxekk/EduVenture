@@ -1,5 +1,5 @@
 import React, { useState, createContext } from "react";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 export const globalContext = createContext();
 export const ContextProvider = ({ children }) => {
@@ -13,10 +13,11 @@ export const ContextProvider = ({ children }) => {
     is_admin: "",
   });
   const [students, setStudents] = useState([]);
-  const [grades,setGrades] = useState([]);
+  const [grades, setGrades] = useState([]);
   const [login, setlogin] = useState("");
   const [password, setpassword] = useState("");
-  const [isLogged, setisLogged] = useState(false);
+  const [isLogged, setIsLogged] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [route, setRoute] = useState("Home");
   const [showAnnouncementOverlay, setShowAnnouncementOverlay] = useState(false);
   const [showEditOverlay, setShowEditOverlay] = useState(false);
@@ -25,7 +26,7 @@ export const ContextProvider = ({ children }) => {
   const [searchFilter, setSearchFilter] = useState("");
   const [sortFilter, setSortFilter] = useState("");
   const [showGradeOverlay, setShowGradeOverlay] = useState(false);
-  const [showAddStudentOverlay,setShowAddStudentOverlay] = useState(false);
+  const [showAddStudentOverlay, setShowAddStudentOverlay] = useState(false);
   const [editStudentData, setEditStudentData] = useState({
     id: null,
     firstName: "",
@@ -56,15 +57,15 @@ export const ContextProvider = ({ children }) => {
 
   const invokeSuccesToast = (text) => {
     toast.success(text, {
-      className: 'bg-green-500 text-white',
+      className: "bg-green-500 text-white",
     });
-  }
+  };
 
   const invokeErrorToast = (text) => {
     toast.error(text, {
-      className: 'bg-red-500 text-white',
+      className: "bg-red-500 text-white",
     });
-  }
+  };
 
   const fetchStudents = async () => {
     const req = await fetch(`http://localhost:8080/getStudents`);
@@ -75,7 +76,7 @@ export const ContextProvider = ({ children }) => {
     const req = await fetch(`http://localhost:8080/getGrades`);
     const res = await req.json();
     setGrades(res);
-  }
+  };
 
   return (
     <globalContext.Provider
@@ -83,7 +84,7 @@ export const ContextProvider = ({ children }) => {
         userData,
         setuserData,
         isLogged,
-        setisLogged,
+        setIsLogged,
         login,
         password,
         setlogin,
@@ -117,7 +118,9 @@ export const ContextProvider = ({ children }) => {
         showGradeOverlay,
         setShowGradeOverlay,
         showAddStudentOverlay,
-        setShowAddStudentOverlay
+        setShowAddStudentOverlay,
+        isAdmin,
+        setIsAdmin,
       }}
     >
       {children}

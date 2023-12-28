@@ -7,8 +7,9 @@ import { globalContext } from "@/context/globalContext";
 type Props = {};
 
 function LoginScreen({}: Props) {
-  const { setuserData, setisLogged, login, password } =
+  const { setuserData, setIsLogged, login, password, setIsAdmin } =
     useContext(globalContext);
+
   async function loginUser() {
     const credentials = {
       login: login,
@@ -25,8 +26,11 @@ function LoginScreen({}: Props) {
 
       const data = await response.json();
       setuserData(data);
-      if (data.id != null) {
-        setisLogged(true);
+      if (data.id != null && Boolean(data.is_admin) == true) {
+        setIsLogged(true);
+        setIsAdmin(true);
+      } else if (data.id != null) {
+        setIsLogged(true);
       } else {
         alert("wrong credentials");
       }

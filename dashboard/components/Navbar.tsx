@@ -17,12 +17,14 @@ import MenuOption from "./MenuOption";
 import { TfiAnnouncement } from "react-icons/tfi";
 import { BsFillPersonFill } from "react-icons/bs";
 import { RiLogoutBoxRFill } from "react-icons/ri";
+import { BiMedal } from "react-icons/bi";
 import { globalContext } from "@/context/globalContext";
 import Home from "./Home";
 import Announcements from "./Announcements";
 import AnnouncementOverlay from "./AnnouncementOverlay";
 import ManageStudents from "./ManageStudents";
 import EditOverlay from "./EditOverlay";
+import MyGrades from "./MyGrades";
 
 const drawerWidth = 240;
 
@@ -101,10 +103,12 @@ export default function MiniDrawer() {
   const [open, setOpen] = useState(false);
   const {
     route,
-    setisLogged,
+    setIsLogged,
     userData,
     showAnnouncementOverlay,
     showEditOverlay,
+    isAdmin,
+    setIsAdmin,
   } = useContext(globalContext);
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -136,14 +140,16 @@ export default function MiniDrawer() {
           </Typography>
           <Box sx={{ flexGrow: 1, gap: "10px" }} /> {/* Added code */}
           <Typography>
-            {userData.firstname} {userData.lastname}
+            {userData.firstname} {userData.lastname}{" "}
+            <b>{isAdmin ? "(Teacher)" : "(Student)"}</b>
           </Typography>
           <IconButton
             color="inherit"
             aria-label="button"
             edge="end"
             onClick={() => {
-              setisLogged(false);
+              setIsLogged(false);
+              setIsAdmin(false);
             }}
           >
             {<RiLogoutBoxRFill className="text-gray-500" />}
@@ -161,23 +167,43 @@ export default function MiniDrawer() {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <List>
-          <MenuOption
-            open={open}
-            text={"Home"}
-            icon={<AiFillHome className="w-[20px] h-[20px]" />}
-          />
-          <MenuOption
-            open={open}
-            text={"Annoucements"}
-            icon={<TfiAnnouncement className="w-[20px] h-[20px]" />}
-          />
-          <MenuOption
-            open={open}
-            text={"Manage Students"}
-            icon={<BsFillPersonFill className="w-[20px] h-[20px]" />}
-          />
-        </List>
+        {isAdmin ? (
+          <List>
+            <MenuOption
+              open={open}
+              text={"Home"}
+              icon={<AiFillHome className="w-[20px] h-[20px]" />}
+            />
+            <MenuOption
+              open={open}
+              text={"Annoucements"}
+              icon={<TfiAnnouncement className="w-[20px] h-[20px]" />}
+            />
+            <MenuOption
+              open={open}
+              text={"Manage Students"}
+              icon={<BsFillPersonFill className="w-[20px] h-[20px]" />}
+            />
+          </List>
+        ) : (
+          <List>
+            <MenuOption
+              open={open}
+              text={"Home"}
+              icon={<AiFillHome className="w-[20px] h-[20px]" />}
+            />
+            <MenuOption
+              open={open}
+              text={"Annoucements"}
+              icon={<TfiAnnouncement className="w-[20px] h-[20px]" />}
+            />
+            <MenuOption
+              open={open}
+              text={"My grades"}
+              icon={<BiMedal className="w-[30px] h-[30px] ml-[-5px]" />}
+            />
+          </List>
+        )}
         <Divider />
       </Drawer>
       <div className="w-[100%] h-[97vh] mt-0">
@@ -185,7 +211,7 @@ export default function MiniDrawer() {
         {route === "Home" && <Home />}
         {route === "Annoucements" && <Announcements />}
         {route === "Manage Students" && <ManageStudents />}
-        {route === "Log Out" && <div>Log Out</div>}
+        {route === "My grades" && <MyGrades />}
       </div>
       {showAnnouncementOverlay && <AnnouncementOverlay />}
       {showEditOverlay && <EditOverlay />}
