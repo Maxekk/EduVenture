@@ -109,7 +109,10 @@ export default function MiniDrawer() {
     showEditOverlay,
     isAdmin,
     setIsAdmin,
+    getCurrentDate,
   } = useContext(globalContext);
+  const [currentHour, setCurrentHour] = useState<String>();
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -117,6 +120,10 @@ export default function MiniDrawer() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  setInterval(() => {
+    setCurrentHour(getCurrentDate());
+  }, 1000);
 
   return (
     <Box sx={{ display: "flex", overflow: "hidden" }}>
@@ -135,10 +142,20 @@ export default function MiniDrawer() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            {route}
-          </Typography>
-          <Box sx={{ flexGrow: 1, gap: "10px" }} /> {/* Added code */}
+          <Box
+            sx={{
+              flex: 1,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginLeft: "auto",
+              paddingLeft: 30,
+            }}
+          >
+            <Typography variant="h6" noWrap component="div">
+              {currentHour}
+            </Typography>
+          </Box>
           <Typography>
             {userData.firstname} {userData.lastname}{" "}
             <b>{isAdmin ? "(Teacher)" : "(Student)"}</b>
