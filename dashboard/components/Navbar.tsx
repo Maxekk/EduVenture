@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
@@ -109,9 +109,11 @@ export default function MiniDrawer() {
     showEditOverlay,
     isAdmin,
     setIsAdmin,
-    getCurrentDate,
+    getCurrentHour,
+    getCurrentDate
   } = useContext(globalContext);
   const [currentHour, setCurrentHour] = useState<String>();
+  const [currentDate, setCurrentDate] = useState<String>();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -122,7 +124,8 @@ export default function MiniDrawer() {
   };
 
   setInterval(() => {
-    setCurrentHour(getCurrentDate());
+    setCurrentHour(getCurrentHour());
+    setCurrentDate(getCurrentDate());
   }, 1000);
 
   return (
@@ -146,14 +149,14 @@ export default function MiniDrawer() {
             sx={{
               flex: 1,
               display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              justifyContent: "left",
+              alignItems: "left",
               marginLeft: "auto",
-              paddingLeft: 30,
+              paddingLeft: 0,
             }}
           >
             <Typography variant="h6" noWrap component="div">
-              {currentHour}
+              {currentDate} | {currentHour}
             </Typography>
           </Box>
           <Typography>

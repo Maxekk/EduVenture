@@ -87,6 +87,16 @@ export const ContextProvider = ({ children }) => {
     return formattedDate;
   };
 
+  const getCurrentHour = () => {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    const formattedTime = `${hours}:${minutes}:${seconds}`;
+    return formattedTime;
+  }
+
+
   return (
     <globalContext.Provider
       value={{
@@ -131,6 +141,7 @@ export const ContextProvider = ({ children }) => {
         isAdmin,
         setIsAdmin,
         getCurrentDate,
+        getCurrentHour
       }}
     >
       {children}
