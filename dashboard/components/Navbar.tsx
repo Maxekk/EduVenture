@@ -110,7 +110,8 @@ export default function MiniDrawer() {
     isAdmin,
     setIsAdmin,
     getCurrentHour,
-    getCurrentDate
+    getCurrentDate,
+    clearMemory
   } = useContext(globalContext);
   const [currentHour, setCurrentHour] = useState<String>();
   const [currentDate, setCurrentDate] = useState<String>();
@@ -169,7 +170,7 @@ export default function MiniDrawer() {
             edge="end"
             onClick={() => {
               setIsLogged(false);
-              setIsAdmin(false);
+              clearMemory()
             }}
           >
             {<RiLogoutBoxRFill className="text-gray-500" />}

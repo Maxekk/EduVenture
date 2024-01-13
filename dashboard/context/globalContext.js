@@ -96,6 +96,44 @@ export const ContextProvider = ({ children }) => {
     return formattedTime;
   }
 
+  const clearMemory = () => {
+    const defaultState = {
+      id: null,
+      firstname: "",
+      lastname: "",
+      emaail: "",
+      login: "",
+      password: "",
+      is_admin: "",
+    };
+  
+    setuserData(defaultState);
+    setStudents([]);
+    setGrades([]);
+    setlogin("");
+    setpassword("");
+    setIsLogged(false);
+    setIsAdmin(false);
+    setRoute("Home");
+    setShowAnnouncementOverlay(false);
+    setShowEditOverlay(false);
+    setAnnouncements([]);
+    setcurrentPage(1);
+    setSearchFilter("");
+    setSortFilter("");
+    setShowGradeOverlay(false);
+    setShowAddStudentOverlay(false);
+    setEditStudentData({
+      id: null,
+      firstName: "",
+      lastName: "",
+      email: "",
+      login: "",
+      grades: [],
+    });
+  };
+  
+
 
   return (
     <globalContext.Provider
@@ -141,7 +179,8 @@ export const ContextProvider = ({ children }) => {
         isAdmin,
         setIsAdmin,
         getCurrentDate,
-        getCurrentHour
+        getCurrentHour,
+        clearMemory
       }}
     >
       {children}

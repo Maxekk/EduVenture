@@ -12,7 +12,7 @@ type Props = {
 
 function Announcement({ id,title, upload_date, content }: Props) {
 
-  const { fetchAnnouncements, invokeSuccesToast, invokeErrorToast } = useContext(globalContext)
+  const { fetchAnnouncements, invokeSuccesToast, invokeErrorToast, isAdmin } = useContext(globalContext)
 
   const deleteAnnouncement = async () => {
     try {
@@ -40,9 +40,14 @@ function Announcement({ id,title, upload_date, content }: Props) {
         <div className="w-[39vw] h-[100%] text-[#646262] text-lg font-bold flex items-center ml-0">
         {title}
         </div>
-        <div className="w-[3vw] h-[100%] text-red-800 text-lg font-bold flex ml-0 justify-center items-center hover:bg-red-400 hover:text-white transition-[0.5s]" onClick={deleteAnnouncement}>
-          <BsTrash />
-        </div>
+        {
+          isAdmin ? 
+          <div 
+            className="w-[3vw] h-[100%] text-red-800 text-lg font-bold flex ml-0 justify-center items-center hover:bg-red-400 hover:text-white transition-[0.5s]" 
+            onClick={deleteAnnouncement}>
+            <BsTrash />
+          </div> : <></>
+        }
       </div>
       <div className="w-[45vw] h-[6vh] border-b-2 flex">
         <div className="w-[10vw] h-[100%] text-[#646262] flex justify-center items-center text-lg">

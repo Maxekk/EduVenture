@@ -11,7 +11,7 @@ type Annoucement = {
 };
 
 function Announcements() {
-  const { setShowAnnouncementOverlay, fetchAnnouncements, announcements } =
+  const { setShowAnnouncementOverlay, fetchAnnouncements, announcements, isAdmin } =
     useContext(globalContext);
 
   useEffect(() => {
@@ -21,6 +21,8 @@ function Announcements() {
   return (
     <div className="w-[100vw] h-[100vh] flex flex-col">
       <div className="w-[100vw] h-[10vh] flex flex-row-reverse p-5 items-center">
+        {
+        isAdmin ? 
         <button
           className="mr-[3vw] w-[200px] h-[55px] bg-[#3E6532] shadow-md text-white text-xl transition-[0.5s] hover:bg-[#73b95c]"
           onClick={() => {
@@ -31,7 +33,9 @@ function Announcements() {
             Add annoucement
             <span className="text-2xl"> +</span>
           </div>
-        </button>
+        </button> : 
+        <></>
+        }
       </div>
       <div className="w-[100vw] h-[90vh] flex gap-10 flex-col items-center overflow-scroll p-5">
         {announcements
