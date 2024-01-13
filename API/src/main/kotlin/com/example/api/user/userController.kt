@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*
 @CrossOrigin(origins = ["http://localhost:3000"])
 class userController {
     @Autowired
-    private lateinit var userservice: userService
+    private lateinit var userservice: UserService
 
     @PostMapping("/login")
     fun checkCredentials(@RequestBody userData: Credentials): LoginResponse = userservice.checkCredentials(userData)

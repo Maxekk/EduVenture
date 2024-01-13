@@ -3,18 +3,31 @@ import Image from "next/image";
 import logo from "../public/logo.png";
 import InputField from "../components/InputField";
 import { globalContext } from "@/context/globalContext";
+import { ToastContainer } from "react-toastify";
+import { CircularProgress } from "@mui/material";
 
 type Props = {};
 
 function LoginScreen({}: Props) {
-  const { setuserData, setIsLogged, login, password, setIsAdmin } =
-    useContext(globalContext);
+  const {
+    setuserData,
+    setIsLogged,
+    login,
+    password,
+    setIsAdmin,
+    invokeErrorToast,
+  } = useContext(globalContext);
+
+  const [loading, setLoading] = useState(false);
 
   async function loginUser() {
+    setLoading(true); // Set loading to true when starting the fetch
+
     const credentials = {
       login: login,
       password: password,
     };
+
     try {
       const response = await fetch(`http://localhost:8080/login`, {
         method: "POST",
@@ -24,18 +37,26 @@ function LoginScreen({}: Props) {
         body: JSON.stringify(credentials),
       });
 
-      const data = await response.json();
-      setuserData(data);
-      if (data.id != null && Boolean(data.is_admin) == true) {
-        setIsLogged(true);
-        setIsAdmin(true);
-      } else if (data.id != null) {
-        setIsLogged(true);
-      } else {
-        alert("wrong credentials");
+      // Check if the response status indicates success (e.g., 200 OK)
+      if (response.ok) {
+        const data = await response.json();
+        setuserData(data);
+        if (data.id != null && Boolean(data.is_admin) === true) {
+          setIsLogged(true);
+          setIsAdmin(true);
+        } else if (data.id != null) {
+          setIsLogged(true);
+        } else {
+          invokeErrorToast("Wrong credentials !")
+        }
       }
     } catch (error) {
-      console.error("Error:", error);
+      invokeErrorToast(
+        "Sorry, looks like servers are off or inaccessible"
+      );
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -54,12 +75,17 @@ function LoginScreen({}: Props) {
                 className="bg-transparent w-[250px] h-[70px] mt-24 text-green-800 font-mono text-3xl border-4 border-green-500 transition-[1s] hover:bg-green-500 shadow-md"
                 onClick={loginUser}
               >
-                Login
+                {loading ? (
+                  <CircularProgress />
+                ) : (
+                  "Login"
+                )}
               </button>
             </div>
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

@@ -108,7 +108,6 @@ export default function MiniDrawer() {
     showAnnouncementOverlay,
     showEditOverlay,
     isAdmin,
-    setIsAdmin,
     getCurrentHour,
     getCurrentDate,
     clearMemory
