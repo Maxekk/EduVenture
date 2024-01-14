@@ -1,17 +1,17 @@
 # EduVenture
 
-EduVenture is a simple student management system built with nextjs and springboot. 
+EduVenture is a simple student management system built with Next.js and Spring Boot. 
 
 
 ## How to Run
 
 1. **Prerequisites:**
-   . To run this project you will need: NodeJs, JDK, Apache and mySQL server
+   To run this project you will need: `NodeJs`, `JDK`, `Apache` and `mySQL server`
   
 2. **Installation:**
    ```bash
    # Clone the repository
-   git clone https://github.com/your-username/your-repo.git
+   git clone https://github.com/Maxekk/EduVenture.git
 
    # Navigate to the project directory
    cd EduVenture
@@ -27,19 +27,20 @@ EduVenture is a simple student management system built with nextjs and springboo
    # Run dashboard
    npm run dev
   App should be running on `localhost:3000`
+  
+ ATTENTION: You may also like to change or remove password for your database, remember to update the db password, you can do this in `EduVenture\API\src\main\resources/application.properties` file
+
+ **Demo logins:**
+ `teacher:teacher & janek:haslo123`
 
 ## Preview
 
-![preview](images/loginscren.png)
+   
+![preview](images/loginscreen.png)
 ![preview](images/dashboard1.png)
 ![preview](images/dashboard2.png)
 ![preview](images/dashboard3.png)
 ![preview](images/management1.png)
 ![preview](images/management2.png)
 ![preview](images/grades.png)
-
-  ATTENTION: You may also like to change or remove password for your database, remember to update the db password, you can do this in `EduVenture\API\src\main\resources/application.properties` file
-
-## Preview
-   
 
