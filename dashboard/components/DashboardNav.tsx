@@ -129,6 +129,7 @@ export default function MiniDrawer() {
   }, 1000);
 
   return (
+    <div className="bg-[rgb(232,234,237)] h-screen">
     <Box sx={{ display: "flex", overflow: "hidden" }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
@@ -236,5 +237,6 @@ export default function MiniDrawer() {
       {showAnnouncementOverlay && <AnnouncementOverlay />}
       {showEditOverlay && <EditOverlay />}
     </Box>
+    </div>
   );
 }

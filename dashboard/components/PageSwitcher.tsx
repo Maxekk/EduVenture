@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { GrFormPrevious } from "react-icons/Gr";
 import { GrFormNext } from "react-icons/Gr";
-import { globalContext } from "@/context/globalContext";
+
 type Props = {
   increasePage: Function;
   decreasePage: Function;

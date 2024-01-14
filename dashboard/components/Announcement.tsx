@@ -11,9 +11,8 @@ type Props = {
 };
 
 function Announcement({ id,title, upload_date, content }: Props) {
-
   const { fetchAnnouncements, invokeSuccesToast, invokeErrorToast, isAdmin } = useContext(globalContext)
-
+  
   const deleteAnnouncement = async () => {
     try {
       const req = await fetch(`http://localhost:8080/deleteAnnouncement`, {
@@ -46,7 +45,8 @@ function Announcement({ id,title, upload_date, content }: Props) {
             className="w-[3vw] h-[100%] text-red-800 text-lg font-bold flex ml-0 justify-center items-center hover:bg-red-400 hover:text-white transition-[0.5s]" 
             onClick={deleteAnnouncement}>
             <BsTrash />
-          </div> : <></>
+          </div> : 
+          <></>
         }
       </div>
       <div className="w-[45vw] h-[6vh] border-b-2 flex">

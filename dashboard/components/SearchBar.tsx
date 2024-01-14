@@ -1,5 +1,5 @@
 import { Container, InputAdornment, TextField } from "@mui/material";
-import { useContext, useState } from "react";
+import { ChangeEvent, useContext } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import { globalContext } from "@/context/globalContext";
 
@@ -13,7 +13,7 @@ export default function SearchBar() {
         type="search"
         label="Lastname Search"
         value={searchFilter}
-        onChange={(e: any) => {setSearchFilter(e.target.value)}}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => { setSearchFilter(e.target.value) }}
         sx={{ width: 300 }}
         InputProps={{
           endAdornment: (

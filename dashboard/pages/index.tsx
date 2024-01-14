@@ -1,8 +1,8 @@
 import LoginScreen from "../components/LoginScreen";
 import { globalContext } from "@/context/globalContext";
 import { useContext } from "react";
-import Dashboard from "../components/Dashboard";
 import Head from "next/head";
+import DashboardNav from "@/components/DashboardNav";
 
 export default function Home() {
   const { isLogged } = useContext(globalContext);
@@ -12,7 +12,7 @@ export default function Home() {
       <Head>
         <title>Eduventure</title>
       </Head>
-      {isLogged ? <Dashboard /> : <LoginScreen />}
+      {isLogged ? <DashboardNav /> : <LoginScreen />}
     </>
   );
 }

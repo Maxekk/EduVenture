@@ -21,7 +21,7 @@ function LoginScreen({}: Props) {
   const [loading, setLoading] = useState(false);
 
   async function loginUser() {
-    setLoading(true); // Set loading to true when starting the fetch
+    setLoading(true);
 
     const credentials = {
       login: login,
@@ -37,7 +37,6 @@ function LoginScreen({}: Props) {
         body: JSON.stringify(credentials),
       });
 
-      // Check if the response status indicates success (e.g., 200 OK)
       if (response.ok) {
         const data = await response.json();
         setuserData(data);
@@ -51,9 +50,7 @@ function LoginScreen({}: Props) {
         }
       }
     } catch (error) {
-      invokeErrorToast(
-        "Sorry, looks like servers are off or inaccessible"
-      );
+      invokeErrorToast("Sorry, looks like servers are off or inaccessible");
       console.log(error);
     } finally {
       setLoading(false);

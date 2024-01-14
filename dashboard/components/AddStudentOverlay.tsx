@@ -13,9 +13,7 @@ type editData = {
   };
 
 function AddStudentOverlay({}: Props) {
-
   const { setShowAddStudentOverlay, invokeErrorToast, invokeSuccesToast, fetchStudents } = useContext(globalContext)
-
   const [dataToEdit, setDataToEdit] = useState({
     id: 0,
     firstName: "",
@@ -39,6 +37,11 @@ function AddStudentOverlay({}: Props) {
   };
 
   const createNewStudent = async () => {
+    if(dataToEdit.password.length < 6){
+      invokeErrorToast("Password should be at least 6 character long")
+      return 
+    }
+
     try{
         const req = await fetch(`http://localhost:8080/createNewUsr`, {
             method: "POST",
